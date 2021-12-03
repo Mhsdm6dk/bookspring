@@ -10,7 +10,6 @@ function App(props) {
   const [state,setState]=useState({giohang:[]});
   const [opengiohang,setOpengiohang]=useState(false);
     const user = useSelector(state=>state.user);
-    console.log(user);
     useEffect(()=>{
       setState(JSON.parse(window.localStorage.getItem('state')));
     },[])
@@ -42,7 +41,7 @@ function App(props) {
             }
             else{
                a.push({
-                 id: item.id,
+                 id: i.id,
                   ten: item.ten,
                   gia:item.gia,
                   image: item.image,
@@ -63,6 +62,7 @@ function App(props) {
        }
       
     setState({...state,giohang:a});
+    console.log(a);
     setOpengiohang({opengiohang:true});
 }
 const clear=()=>{
@@ -102,7 +102,7 @@ if(user.admin!="yes"){
     <div>
         <header className="header">
             <div className="dau">
-              <Head clear={clear} opengiohang={opengiohang} setOpengiohang={setOpengiohang} giohang={state.giohang} admin={user.admin} username={user.username} xoa={xoa} xoabot={xoabot} themvagiohang={themvagiohang}/>
+              <Head clear={clear} opengiohang={opengiohang} setOpengiohang={setOpengiohang} giohang={state.giohang} admin={user.admin} name={user.name} username={user.username} xoa={xoa} xoabot={xoabot} themvagiohang={themvagiohang}/>
               <Search />
 
             </div>

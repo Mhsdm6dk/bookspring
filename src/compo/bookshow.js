@@ -12,25 +12,37 @@ export default function Bookshow(props){
         return item.filter((item)=>item.name==props.category_name);
     })
     .then(item=>{
-        if (item.itemEntities!=null) {
+        if(item[0]!=null){
             thaydoikho(item[0].itemEntities)
+        }
+        else{
+            thaydoikho([])
         }
     })
 },[props.category_name])
-    const them=(item)=>{
-        const u={
-            ten: kho[item.target.id].name,
-            gia: kho[item.target.id].price,
-            image: kho[item.target.id].image,
-            id: kho[item.target.id].id
-        }
-        props.themvagiohang(u);
-    }
     const items=kho.filter((item)=>item.name.toUpperCase().includes(timkiem.toUpperCase()));
     if(timkiem==''){
+        const them=(item)=>{
+            const u={
+                ten: kho[item.target.id].name,
+                gia: kho[item.target.id].price,
+                image: kho[item.target.id].image,
+                id: kho[item.target.id].id
+            }
+            props.themvagiohang(u);
+        }
         return <Displaybook kho={kho} them={them}/>
     }
     else{
+        const them=(item)=>{
+            const u={
+                ten: items[item.target.id].name,
+                gia: items[item.target.id].price,
+                image: items[item.target.id].image,
+                id: items[item.target.id].id
+            }
+            props.themvagiohang(u);
+        }
         return <Displaybook kho={items} them={them}/>
     }
         

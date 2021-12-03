@@ -1,3 +1,4 @@
+import axios from "axios";
 import React,{ useEffect, useState} from "react";
 import './admin.css';
 export default function Boxitem(props){
@@ -9,23 +10,14 @@ export default function Boxitem(props){
         setState({...state,[item.target.name]:item.target.value});
     }
     const suaitem=()=>{
-        fetch('https://book-app-vip.herokuapp.com/api/item/update',{
-            method:"PUT",
-                headers:{
-                    'Content-Type': 'application/json'
-                  },
-            body:JSON.stringify({
-                "id":props.u.id,
-                "name":props.u.name,
-                "image":props.u.image,
-                "price":state.price,
-                "describes":props.u.describes,
-                "inventory":state.inventory,
-                "category_name":props.category_name
-            }
-            
-            ),
-            redirect: 'follow'
+        axios.put('https://book-app-vip.herokuapp.com/api/item/update', {
+            "id":props.u.id,
+            "name":props.u.name,
+            "image":props.u.image,
+            "price":state.price,
+            "describes":props.u.describes,
+            "inventory":state.inventory,
+            "category":props.u.category
         })
         .then(alert("Thay đổi thông tin sản phẩm thành công"))
     }

@@ -30,7 +30,11 @@ function Infosanpham(props){
         setState({...state,[item.target.name]:item.target.value});
     }
     const them=()=>{
-        fetch('https://book-app-vip.herokuapp.com/api/item/create',{
+        if (state.name=="" || state.image=='' || state.price==0 || state.describes=="" || state.inventory==0 ){
+            alert('Vui lòng nhập đủ thông tin!')
+        }
+        else{
+            fetch('https://book-app-vip.herokuapp.com/api/item/create',{
             method:"POST",
                 headers:{
                     'Content-Type': 'application/json'
@@ -44,14 +48,19 @@ function Infosanpham(props){
                 "category_name":state.category_name
             })
         })
-        .then(item=>item.json())
-        .then(item=>{
-            props.themsanpham(item);
-        })
+        props.themsanpham({
+            "name":state.name,
+            "image":state.image,
+            "price":state.price,
+            "describes":state.describes,
+            "inventory":state.inventory,
+            "category":state.category_name
+        });
         props.dong();
+        }
     }
 
-    return<div className="additem__form">
+    return<div className="additem__form" style={{top:"110px"}}>
         <h3>Thông tin sản phẩm</h3>
         <table>
         <tr>
@@ -68,6 +77,9 @@ function Infosanpham(props){
         </tr>
         <tr>
             <td>Phân loại:</td><td><input className="additem__form-input" type="text" name="category_name" value={props.category_name}/></td>
+        </tr>
+        <tr>
+            <td>Mô tả:</td><td><textarea className="additem__form-textarea" name="describes" onChange={handleState}/></td>
         </tr>
         </table>
         <div className="additem__form-butoon" onClick={them}>Thêm sản phẩm</div>

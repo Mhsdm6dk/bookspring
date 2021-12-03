@@ -1,4 +1,5 @@
 
+import axios from "axios";
 import React, { useState,useEffect } from "react";
 import '../../App.css';
 export default function Dangki(props){
@@ -27,8 +28,8 @@ export default function Dangki(props){
                 break;
             }
         }
-        if(state.password!=state.nhaplaipassword){
-            alert("Nhập lại mật khẩu chưa đúng !");
+        if(state.password!=state.nhaplaipassword || state.username=="" || state.password==""){
+            alert("Nhập lại mật khẩu sai hoặc định dạng tài khoản chưa đúng !");
         }
         else if(kt==1){
             alert("Tên đăng nhập này đã được đăng kí, vui lòng chọn tên khác !");
@@ -36,25 +37,27 @@ export default function Dangki(props){
         else{
             const u={
                 "username": state.username,
-                "password": state.password
+                "password": state.password,
+                "name":"trống",
+                "email":"trống",
+                "address":"trống",
+                "telephone":"trống"
             }
-            fetch("https://book-app-vip.herokuapp.com/api/customer/create?fbclid=IwAR21JlPAhaAfjqwT6rbbVySYsT3_5MjuI3fAE0erbl1nGSTbWd3LchD_9OM",{
-                method:"POST",
-                headers:{
-                    'Content-Type': 'application/json'
-                  },
-                body:JSON.stringify(u)
+            axios.post("https://book-app-vip.herokuapp.com/api/customer/create?fbclid=IwAR21JlPAhaAfjqwT6rbbVySYsT3_5MjuI3fAE0erbl1nGSTbWd3LchD_9OM",u)
+            .then(res=>{
+                alert("Tài khoản đăng kí thành công, vui lòng đăng nhập để mua hàng !");
+                props.thoatform();
+                props.display("Đăng nhập");
             })
-            .then()
-            alert("Tài khoản đăng kí thành công, vui lòng đăng nhập để mua hàng !");
-            props.thoatform();
-            props.display("Đăng nhập");
+           
         }
     }
     const gotodangnhap=()=>{
         props.display("Đăng nhập");
     }
-        return <div className="form__inputform" id="formdangki" >
+        return <div className="background">
+        <div className="form__dangnhap-inputform"  >
+        <div className="form__inputform" id="formdangki" >
             <div style={{margin:"0px 0px 20px 10px"}}>
                 <div className="form__header">
                     <h3 >Đăng kí</h3>
@@ -69,5 +72,7 @@ export default function Dangki(props){
                 <button className="button__dangnhap form__inputform-button2" onClick={dangki}>Đăng kí</button>
                 <button className="button__boqua form__inputform-button" onClick={props.thoatform}>Bỏ qua</button>
         </div>
+    </div>
+    </div>
     </div>
     }

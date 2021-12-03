@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {  useState,useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {kiemtrauser} from "../../actions";
@@ -9,10 +10,9 @@ export default function Dangnhap(props){
         });
         const [nguoidung,setNguoidung]=useState([]);
         useEffect(()=>{
-            fetch('https://book-app-vip.herokuapp.com/api/customer/show?fbclid=IwAR3qod2TxWDDxCGU0UUx6ca7LcEB1aOtJsqe-EF-kqjfk0CN1L7lSs5-IlU')
-            .then(user=>user.json())
+            axios.get('https://book-app-vip.herokuapp.com/api/customer/show?fbclid=IwAR3qod2TxWDDxCGU0UUx6ca7LcEB1aOtJsqe-EF-kqjfk0CN1L7lSs5-IlU')
             .then(user=>{
-                setNguoidung(user);
+                setNguoidung(user.data);
             })
         },[])
         const getinfo=(item)=>{
@@ -47,7 +47,9 @@ export default function Dangnhap(props){
         const gotodangki=()=>{
             props.display("Đăng kí");
         }
-        return <div className="form__inputform" id="formdangnhap" >
+        return <div className="background">
+            <div className="form__dangnhap-inputform" id="formdangnhap" >
+            <div className="form__inputform">
             <div style={{margin:"0px 0px 20px 10px"}}>
                 <div className="form__header">
                 <h3 >Đăng nhập</h3>
@@ -57,9 +59,13 @@ export default function Dangnhap(props){
             <input type="text" id="tendangnhap" placeholder="Nhập tên đăng nhập" name="username" onChange={getinfo} className="form__inputform-text"></input>
             <div className="spaceline">Mật khẩu:</div>
             <input type="password" id="matkhau" name="password" onChange={getinfo} placeholder="*******" className="form__inputform-text"></input>
+            <br/>
             <button className="button__dangnhap form__inputform-button2" onClick={dangnhap}>Đăng nhập</button>
+            <br/>
             <button className="button__boqua form__inputform-button" onClick={props.thoatform}>Bỏ qua</button>
             </div>
+            </div>
+        </div>
         </div>
 
 }
