@@ -10,6 +10,7 @@ export default function Boxitem(props){
         setState({...state,[item.target.name]:item.target.value});
     }
     const suaitem=()=>{
+        
         axios.put('https://book-app-vip.herokuapp.com/api/item/update', {
             "id":props.u.id,
             "name":props.u.name,
@@ -17,7 +18,7 @@ export default function Boxitem(props){
             "price":state.price,
             "describes":props.u.describes,
             "inventory":state.inventory,
-            "category":props.u.category
+            "category_name":props.category_name
         })
         .then(alert("Thay đổi thông tin sản phẩm thành công"))
     }
